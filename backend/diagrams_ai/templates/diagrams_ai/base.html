@@ -13,9 +13,44 @@
     <div id="charts-container"></div>
     <div id="prompt-container">
         <textarea id="text-input" placeholder="Enter a prompt"></textarea>
+        <button id="submit-button">Send to LLM</button>
     </div>
 </body>
 
 <script>
+    function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getToken('csrftoken')
 
+    document.getElementById("submit-button").addEventListener("click", () => {
+        const prompt = document.getElementById("text-input").value;
+
+        fetch("{% url 'send_prompt_to_llm' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                body: prompt,
+            })
+        }).then(response => response.json()).then(data => {
+            body = data["message"];
+            document.getElementById("charts-container").innerHTML = `<h2>${body}</h2>`;
+        }).catch(error => {
+            console.error("Error: ", error);
+        });
+    });
 </script>
