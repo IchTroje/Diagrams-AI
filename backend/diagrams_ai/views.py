@@ -11,4 +11,7 @@ def send_prompt_to_llm(request):
     if request.method == "POST":
         prompt = json.loads(request.body.decode("utf-8"))["body"]
         return JsonResponse({"message": f"{prompt}"}, safe=False)
-    return JsonResponse({"message": "Wszystko jest git :)"}, safe=False)
+    return JsonResponse(
+        {"message": "Other method HTTP method used, only POST works for this endpoint"},
+        safe=False,
+    )
