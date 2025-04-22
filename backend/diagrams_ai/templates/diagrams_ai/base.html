@@ -22,14 +22,14 @@
 </body>
 
 <script>
-    function getToken(name) {
+    function getCookie(name) {
         let cookieValue = null;
 
-        if (document.cookie && document.cookie != '') {
-            const cookies = document.cookie.split(';');
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
                 }
@@ -37,13 +37,13 @@
         }
         return cookieValue;
     }
-    var csrftoken = getToken('csrftoken');
+    const csrftoken = getCookie("csrftoken");
 
     function stoppedTyping() {
         if (document.getElementById("text-input").value.trimEnd() === "") {
-            document.getElementById('submit-button').disabled = true;
+            document.getElementById("submit-button").disabled = true;
         } else {
-            document.getElementById('submit-button').disabled = false;
+            document.getElementById("submit-button").disabled = false;
         }
     }
 
@@ -54,7 +54,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                'X-CSRFToken': csrftoken,
+                "X-CSRFToken": csrftoken,
             },
             body: JSON.stringify({
                 body: prompt,
@@ -67,6 +67,6 @@
         });
 
         document.getElementById("text-input").value = "";
-        document.getElementById('submit-button').disabled = true;
+        document.getElementById("submit-button").disabled = true;
     }
 </script>
