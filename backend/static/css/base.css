@@ -10,13 +10,14 @@
     --thumb-hover: #388E3C;
     --thumb-active: #1B5E20;
 }
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; /* Ustawiamy Roboto jako czcionkę domyślną */
     font-weight: 400;
 }
+
 
 html {
     max-width: 100%;
@@ -35,6 +36,7 @@ body {
 }
 
 #charts-container {
+    margin-top: 60px;
     padding: 20px;
     width: 100vw;
     height: 100vh;
@@ -48,49 +50,93 @@ body {
     z-index: 10;
     width: 50vw;
     height: 20vh;
-    background-color: var(--bkg-color);
+    background-color: #2a2a2a;
     border-radius: 10px;
-    border-color: black;
-    border-style: solid;
-    border-width: 2px;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;      
+    justify-content: space-between;
 }
 
+
 #text-input {
+    border: solid 2px #434242;
     color: var(--text-color);
     width: 90%;
     height: 90%;
     resize: none;
-    background: none;
-    border: none;
+    background-color: #2a2a2a; /* jaśniejsze tło */
     box-shadow: none;
     outline: none;
+    border-radius: 8px;
+    padding: 10px;
 }
+
 
 #submit-button {
     width: 7%;
     height: auto;
     border: none;
     border-radius: 10px;
-    background-color: var(--btn-default);
+    background-color: #2a2a2a;
+    border: solid 2px #434242;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
 }
 
 #submit-button:hover {
-    background-color: var(--btn-hover);
+    background-color: var(--btn-hover); /* Zielony */
+    border: solid 2px #256D27;          /* Zielony odcień */
+    cursor: pointer;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
 }
 
+
 #submit-button:active {
-    background-color: var(--btn-active);
+    background-color: #2a2a2a;
+    border: solid 2px #434242;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
 }
 
 #submit-button:disabled {
-    background-color: var(--bkg-color);
+    background-color: #2a2a2a;
+    border: solid 2px #434242;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
 }
 
 #arrow-up {
     font-size: xx-large;
     color: var(--text-color);
+}
+
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    background-color: var(--bkg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: 2px solid var(--thumb-default);
+    z-index: 100;
+}
+
+#navbar .nav-left {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#navbar .nav-right a {
+    color: var(--text-color);
+    margin-left: 1.5rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+#navbar .nav-right a:hover {
+    color: var(--thumb-hover);
 }
