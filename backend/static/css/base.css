@@ -28,6 +28,18 @@ body {
     height: 100%;
 }
 
+details {
+    position: absolute;
+    left: 25%;
+    bottom: 1vh;
+    z-index: 10;
+}
+
+summary {
+    margin: 10px;
+    color: #1A1A1A;
+}
+
 #canvas {
     height: 100%;
 }
@@ -50,10 +62,6 @@ body {
 
 #prompt-container {
     padding: 20px;
-    position: absolute;
-    left: 25%;
-    bottom: 1vh;
-    z-index: 10;
     width: 50vw;
     height: 20vh;
     background-color: var(--bkg-color);

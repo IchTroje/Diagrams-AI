@@ -17,14 +17,17 @@
 
 <body>
     <div id="canvas"></div>
-    <div id="prompt-container">
-        <textarea id="text-input" placeholder="Enter a prompt" onkeyup="stoppedTyping()"></textarea>
-        <button id="submit-button" onclick="send_prompt()" disabled>
-            <span id="arrow-up">
-                &#129033;
-            </span>
-        </button>
-    </div>
+    <details>
+        <summary>Prompt box</summary>
+        <div id="prompt-container">
+            <textarea id="text-input" placeholder="Enter a prompt" onkeyup="stoppedTyping()"></textarea>
+            <button id="submit-button" onclick="send_prompt()" disabled>
+                <span id="arrow-up">
+                    &#129033;
+                </span>
+            </button>
+        </div>
+    </details>
 </body>
 
 <script>
