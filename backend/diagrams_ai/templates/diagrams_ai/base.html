@@ -8,10 +8,15 @@
     <!-- Google Fonts -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <!-- BPMN.js -->
+    <!-- required modeler styles -->
     <link rel="stylesheet" href="https://unpkg.com/bpmn-js@18.6.1/dist/assets/bpmn-js.css">
-    <script src="https://unpkg.com/bpmn-js@18.6.1/dist/bpmn-navigated-viewer.development.js"></script>
-    <!-- JQuery -->
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@18.6.1/dist/assets/diagram-js.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@18.6.1/dist/assets/bpmn-font/css/bpmn.css">
+
+    <!-- modeler distro -->
+    <script src="https://unpkg.com/bpmn-js@18.6.1/dist/bpmn-modeler.development.js"></script>
+
+    <!-- needed for this example only -->
     <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
 </head>
 
@@ -20,8 +25,9 @@
     <details>
         <summary>Prompt box</summary>
         <div id="prompt-container">
+            <button id="save-button" onclick="exportDiagram()">Save to console :)</button>
             <textarea id="text-input" placeholder="Enter a prompt" onkeyup="stoppedTyping()"></textarea>
-            <button id="submit-button" onclick="send_prompt()" disabled>
+            <button id="submit-button" onclick="sendPrompt()" disabled>
                 <span id="arrow-up">
                     &#129033;
                 </span>
@@ -31,8 +37,8 @@
 </body>
 
 <script>
-    let bpmnViewer = new BpmnJS({
-        container: '#canvas'
+    let bpmnModeler = new BpmnJS({
+        container: '#canvas',
     });
 
     function getCookie(name) {
@@ -60,7 +66,17 @@
         }
     }
 
-    function send_prompt() {
+    async function exportDiagram() {
+        try {
+            var result = await bpmnModeler.saveXML({ format: true });
+            alert('Diagram exported. Check the developer tools!');
+            console.log('DIAGRAM', result.xml);
+        } catch (err) {
+            console.error('could not save BPMN 2.0 diagram', err);
+        }
+    }
+
+    async function sendPrompt() {
         const prompt = document.getElementById("text-input").value;
 
         fetch("{% url 'send_prompt_to_llm' %}", {
@@ -76,9 +92,19 @@
             body = data["message"].replaceAll("`", "").replace("xml", "");
             console.log(body);
             try {
-                bpmnViewer.clear();
-                bpmnViewer.importXML(body);
-                bpmnViewer.get('canvas').zoom('fit-viewport');
+                bpmnModeler.clear();
+                bpmnModeler.importXML(body);
+                var canvas = bpmnModeler.get('canvas');
+                var overlays = bpmnModeler.get('overlays');
+                canvas.zoom('fit-viewport');
+                overlays.add('SCAN_OK', 'note', {
+                    position: {
+                        bottom: 0,
+                        right: 0
+                    },
+                    html: '<div class="diagram-note">Mixed up the labels?</div>'
+                });
+                canvas.addMarker('SCAN_OK', 'needs-discussion');
             } catch (err) {
                 console.log("BPMN Error: ", err);
             }
