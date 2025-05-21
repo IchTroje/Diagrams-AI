@@ -152,7 +152,7 @@ p {
     box-shadow: none;
     outline: none;
     border-color: #2E2E2E;
-    border-radius: 2px;
+    border-radius: 10px;
 }
 
 #submit-button-container {
