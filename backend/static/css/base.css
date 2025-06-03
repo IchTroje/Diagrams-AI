@@ -86,6 +86,7 @@ p {
 
 .pretty-button {
     background-color: #4f46e5;
+    display: flex;
     color: white;
     padding: 0.2em 2em;
     max-height: 50px;
